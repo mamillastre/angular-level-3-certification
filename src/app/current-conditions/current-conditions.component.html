@@ -1,3 +1,11 @@
 <div>
-  <app-current-conditions-card *ngFor="let location of currentConditionsByZip()" [location]="location" />
+
+  <app-tabs>
+    <ng-template *ngFor="let location of currentConditionsByZip()" [appTab]="location.zip"
+      [appTabLabel]="location.data.name + ' (' + location.zip + ')'" appTabClosable
+      (appTabOnClosed)="removeLocation(location.zip)">
+      <app-current-conditions-card [location]="location" />
+    </ng-template>
+  </app-tabs>
+
 </div>

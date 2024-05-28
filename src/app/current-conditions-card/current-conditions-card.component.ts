@@ -2,7 +2,6 @@ import { DecimalPipe } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ConditionsAndZip } from 'app/conditions-and-zip.type';
-import { LocationService } from 'app/location.service';
 import { WeatherService } from 'app/weather.service';
 
 @Component({
@@ -16,7 +15,6 @@ export class CurrentConditionsCardComponent {
 
   @Input({required: true}) location!: ConditionsAndZip;
 
-  protected locationService = inject(LocationService);
   protected weatherService = inject(WeatherService);
   private router = inject(Router);
 
