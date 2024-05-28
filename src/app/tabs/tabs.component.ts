@@ -57,10 +57,10 @@ export class TabsComponent implements AfterViewInit {
   }
 
   /**
-   * Remove a tab from the view
+   * Close a tab from the view
    */
-  protected removeTab(tab: TabDirective): void {
-    console.log('REMOVE', tab);
+  protected closeTab(tab: TabDirective): void {
+    tab.close();
   }
 
   /**

@@ -1,15 +1,23 @@
 <div role="tablist" aria-label="Locations" (keydown)="onTabListKeydown($event)">
-  <button *ngFor="let tab of tabDirectives(); trackBy: trackByTabId" role="tab"
-    [attr.aria-selected]="activeTab()?.id === tab.id" [attr.aria-controls]="'panel-'+tab.id" [id]="'tab-'+tab.id"
-    [tabindex]="(focusedTab() && focusedTab().id === tab.id || !focusedTab() && activeTab()?.id === tab.id) ? 0 : -1"
-    [ngClass]="{active: activeTab()?.id === tab.id}" (click)="selectTab(tab)">
-    {{tab.label}}
-    <button *ngIf="tab.closable" class="remove-btn"
+
+  <ng-container *ngFor="let tab of tabDirectives(); trackBy: trackByTabId">
+    <!-- Tab button, show it only when not closed -->
+    <button *ngIf="!tab.isClosed" role="tab" [attr.aria-selected]="activeTab()?.id === tab.id"
+      [attr.aria-controls]="'panel-'+tab.id" [id]="'tab-'+tab.id"
       [tabindex]="(focusedTab() && focusedTab().id === tab.id || !focusedTab() && activeTab()?.id === tab.id) ? 0 : -1"
-      aria-label="Remove the tab" (click)="$event.stopPropagation(); removeTab(tab);">&#x2715;</button>
-  </button>
+      [ngClass]="{active: activeTab()?.id === tab.id}" (click)="selectTab(tab)">
+
+      {{tab.label}}
+
+      <!-- Remove button -->
+      <button *ngIf="tab.closable" class="remove-btn"
+        [tabindex]="(focusedTab() && focusedTab().id === tab.id || !focusedTab() && activeTab()?.id === tab.id) ? 0 : -1"
+        aria-label="Remove the tab" (click)="$event.stopPropagation(); closeTab(tab);">&#x2715;</button>
+    </button>
+  </ng-container>
 </div>
 
+<!-- The active tab content -->
 <div *ngIf="activeTab()" [id]="'panel-'+activeTab().id" role="tabpanel" tabindex="0"
   [attr.aria-labelledby]="'tab-'+activeTab().id">
   <ng-container *ngTemplateOutlet="activeTab().templateRef" />
