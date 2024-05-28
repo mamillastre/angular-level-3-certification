@@ -1,0 +1,39 @@
+:host {
+  --tab-background: #fff;
+  --tab-color: #000;
+  --tab-selected-background: #516788;
+  --tab-selected-color: #fff;
+  --tab-border: 1px solid #646464;
+  --tab-content-border: var(--tab-border, 1px solid #000);
+  --tab-content-padding: 1.5rem;
+}
+
+[role=tablist] > button {
+  background: var(--tab-background, #000);
+  color: var(--tab-color, #fff);
+  border: var(--tab-border, 1px solid #000);
+  border-bottom: none;
+  padding: .3rem 1.2rem;
+  margin-right: .3rem;
+}
+
+[role=tablist] > button.active {
+  background: var(--tab-selected-background, #000);
+  color: var(--tab-selected-color, #fff);
+}
+
+[role=tablist] button.remove-btn {
+  width: 1em;
+  height: 100%;
+  color: inherit;
+  margin-inline: .3em -.3em;
+  background: none;
+  opacity: .6;
+  border: none;
+  padding: 0;
+}
+
+[role=tabpanel] {
+  border: var(--tab-content-border, 1px solid #000);
+  padding: var(--tab-content-padding);
+}
