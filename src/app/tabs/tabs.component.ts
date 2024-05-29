@@ -49,9 +49,9 @@ export class TabsComponent implements AfterViewInit {
 
   /**
    * Select a tab
-   * @param tab The tab directive to select
+   * @param tab The tab directive to select. null to unselect all tabs
    */
-  protected selectTab(tab: TabDirective): void {
+  protected selectTab(tab: TabDirective | null): void {
     this.activeTab.set(tab);
     this.focusedTab.set(null);
   }
@@ -60,6 +60,12 @@ export class TabsComponent implements AfterViewInit {
    * Close a tab from the view
    */
   protected closeTab(tab: TabDirective): void {
+    // Compute the tab to activate (Next tab, then previous tab, then first tab, else deselect all tabs)
+    const tabs = this.tabDirectives();
+    const currentTabIndex = tabs.findIndex(t => t.id === tab.id);
+    this.selectTab(tabs[currentTabIndex + 1] ?? tabs[currentTabIndex - 1] ?? tabs[0] ?? null);
+
+    // Close the tab
     tab.close();
   }
 
