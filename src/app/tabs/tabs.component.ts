@@ -60,10 +60,12 @@ export class TabsComponent implements AfterViewInit {
    * Close a tab from the view
    */
   protected closeTab(tab: TabDirective): void {
-    // Compute the tab to activate (Next tab, then previous tab, then first tab, else deselect all tabs)
-    const tabs = this.tabDirectives();
-    const currentTabIndex = tabs.findIndex(t => t.id === tab.id);
-    this.selectTab(tabs[currentTabIndex + 1] ?? tabs[currentTabIndex - 1] ?? tabs[0] ?? null);
+    // Compute the tab to activate if the closed tab is active (Next tab, then previous tab, then first tab, else deselect all tabs)
+    if (tab.id === this.activeTab().id) {
+      const tabs = this.tabDirectives();
+      const currentTabIndex = tabs.findIndex(t => t.id === tab.id);
+      this.selectTab(tabs[currentTabIndex + 1] ?? tabs[currentTabIndex - 1] ?? tabs[0] ?? null);
+    }
 
     // Close the tab
     tab.close();
