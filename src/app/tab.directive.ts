@@ -2,6 +2,17 @@ import { Directive, EventEmitter, Input, Output, TemplateRef, booleanAttribute, 
 
 /**
  * A tab element inside a TabsComponent
+ * Apply this directive on a ng-template (to manage lazy-loading) directly inside the app-tabs component.
+ * 
+ * @example
+ * <ng-template appTab="uniqueTabId" appTabLabel="Title of the tab" appTabClosable (appTabOnClosed)="doExtraAction()">
+ *   My tab content
+ * </ng-template>
+ * 
+ * @example You can also use the structural directive syntax. But the ng-template syntax is preferred since it can manage directive's outputs
+ * <div *appTab="'uniqueTabIdWithStructuralDirectiveSyntax'; label: 'Title'">
+ *   My tab content
+ * </div>
  */
 @Directive({
   selector: 'app-tabs > ng-template[appTab]',

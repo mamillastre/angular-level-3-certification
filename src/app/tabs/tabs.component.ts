@@ -2,6 +2,21 @@ import { NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ContentChildren, ElementRef, QueryList, inject, signal } from '@angular/core';
 import { TabDirective } from 'app/tab.directive';
 
+/**
+ * A generic tabs management component.
+ * The tab content is lazy loaded when the tab is active.
+ * Use the TabDirective to manage the tabs in this component.
+ * 
+ * @example
+ * <app-tabs>
+ *   <ng-template appTab="uniqueTabId" appTabLabel="Title of the tab">
+ *     Tab 1 content
+ *   </ng-template>
+ *   <ng-template appTab="anOtherUniqueTabId" appTabLabel="A closable tab with a closed event" appTabClosable (appTabOnClosed)="doExtraAction()">
+ *     Tab 2 content
+ *   </ng-template>
+ * </app-tabs>
+ */
 @Component({
   selector: 'app-tabs',
   standalone: true,
