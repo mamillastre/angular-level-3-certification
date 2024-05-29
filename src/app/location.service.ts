@@ -20,9 +20,12 @@ export class LocationService {
   }
 
   addLocation(zipcode: string) {
-    const locations = [...this.locations$.getValue(), zipcode];
-    localStorage.setItem(LOCATIONS, JSON.stringify(locations));
-    this.locations$.next(locations);
+    // Add the location only if it does not exist
+    if (!this.locations$.getValue().includes(zipcode)) {
+      const locations = [...this.locations$.getValue(), zipcode];
+      localStorage.setItem(LOCATIONS, JSON.stringify(locations));
+      this.locations$.next(locations);
+    }
   }
 
   removeLocation(zipcode: string) {
