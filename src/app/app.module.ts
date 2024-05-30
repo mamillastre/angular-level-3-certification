@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { ENVIRONMENT_INITIALIZER, NgModule, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -9,7 +9,7 @@ import { ForecastsListComponent } from './forecasts-list/forecasts-list.componen
 import {WeatherService} from "./weather.service";
 import { CurrentConditionsComponent } from './current-conditions/current-conditions.component';
 import { MainPageComponent } from './main-page/main-page.component';
-import {RouterModule} from "@angular/router";
+import { RouterModule} from "@angular/router";
 import {routing} from "./app.routing";
 import {HttpClientModule} from "@angular/common/http";
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -17,6 +17,8 @@ import { environment } from '../environments/environment';
 import { TabsComponent } from "./tabs/tabs.component";
 import { TabDirective } from './tab.directive';
 import { CurrentConditionsCardComponent } from './current-conditions-card/current-conditions-card.component';
+import { CacheService } from './cache.service';
+import { DebugCachePanelComponent } from './debug-cache-panel/debug-cache-panel.component';
 
 @NgModule({
   declarations: [
@@ -35,9 +37,25 @@ import { CurrentConditionsCardComponent } from './current-conditions-card/curren
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     TabsComponent,
     TabDirective,
-    CurrentConditionsCardComponent
+    CurrentConditionsCardComponent,
+    DebugCachePanelComponent
   ],
-  providers: [LocationService, WeatherService],
+  providers: [
+    LocationService,
+    WeatherService,
+    {
+      provide: ENVIRONMENT_INITIALIZER,
+      multi: true,
+      useValue() {
+        // Initialize the debug expiration time of the cache from the query param value
+        const queryParams = new URLSearchParams(window.location.search);
+        const duration = parseInt(queryParams.get('debugCacheDuration'));
+        if (!isNaN(duration)) {
+          inject(CacheService).debugExpireIn(duration);
+        }
+      }
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

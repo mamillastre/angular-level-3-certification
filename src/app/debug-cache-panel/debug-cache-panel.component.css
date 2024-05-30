@@ -1,0 +1,8 @@
+p > input {
+  display: inline;
+  width: auto;
+}
+
+button {
+  margin-inline-end: 1rem;
+}

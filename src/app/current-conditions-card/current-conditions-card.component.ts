@@ -19,6 +19,6 @@ export class CurrentConditionsCardComponent {
   private router = inject(Router);
 
   showForecast(zipcode : string){
-    this.router.navigate(['/forecast', zipcode])
+    this.router.navigate(['/forecast', zipcode], {queryParamsHandling: 'preserve'})
   }
 }

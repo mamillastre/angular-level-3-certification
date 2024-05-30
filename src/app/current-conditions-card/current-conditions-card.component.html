@@ -8,7 +8,8 @@
       - Min {{location.data.main.temp_min | number:'.0-0'}}
     </p>
     <p>
-      <a [routerLink]="['/forecast', location.zip]">Show 5-day forecast for {{location.data.name}}</a>
+      <a [routerLink]="['/forecast', location.zip]" queryParamsHandling="preserve">Show 5-day forecast for
+        {{location.data.name}}</a>
     </p>
   </div>
   <div>

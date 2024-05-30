@@ -1,0 +1,30 @@
+<form class="well">
+  <h3>Override the cache duration</h3>
+  <p>
+    This input forces the cache duration for the app.<br />
+    After an update, it is recommended to refresh the page to avoid to keep data in memory (like the current
+    conditions).
+  </p>
+  <p>
+    <input #durationInput="ngModel" type="number" placeholder="Cache duration in seconds" class="form-control"
+      name="duration" [ngModel]="currentDebugDuration$ | async">
+    <span>&nbsp;seconds</span>
+  </p>
+
+  <button type="submit" class="btn btn-primary" [disabled]="durationInput.value === (currentDebugDuration$ | async)"
+    (click)="updateCacheDuration(durationInput.value)">
+    Update the cache duration
+  </button>
+
+  <button class="btn btn-primary" [disabled]="(currentDebugDuration$ | async) === null"
+    (click)="updateCacheDuration(null)">
+    Reset to the default duration
+  </button>
+
+  <h3>Clear the cached data</h3>
+  <p>All the cached data will be removed.</p>
+
+  <button class="btn btn-danger" (click)="cacheService.clear()">
+    Clear the cache data
+  </button>
+</form>
