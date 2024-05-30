@@ -9,6 +9,9 @@ import { Injectable } from '@angular/core';
 })
 export class CacheService {
 
+  /** This attribute overrides the expireIn param from the get method */
+  private debugExpireInValue: number | null = null;
+
   /**
    * Add a value in the cache.
    * @param opts.key The unique key of the cached value to use to recover the data
@@ -37,10 +40,10 @@ export class CacheService {
       const cacheData = JSON.parse(data) as CacheData<T>;
 
       // Check the expiration date
-      if (expireIn !== undefined || expireIn !== null) {
+      if (expireIn !== undefined || expireIn !== null || this.debugExpireInValue !== undefined || this.debugExpireInValue !== null) {
         const now = new Date();
         const expirationDate = new Date(cacheData.creationDate);
-        expirationDate.setSeconds(expirationDate.getSeconds() + expireIn);
+        expirationDate.setSeconds(expirationDate.getSeconds() + (this.debugExpireInValue ?? expireIn));
 
         if (expirationDate < now) {
           return null;
@@ -53,6 +56,15 @@ export class CacheService {
       // Invalid JSON data
       return null;
     }
+  }
+
+  /**
+   * This method forces the expireIn parameter from the "get" method.
+   * This is only for debugging purpose. Do not use out of this scope.
+   * @param expireIn The value to force. It will override all the "expireIn" parameters passed to the "get" method. Set to null to reset the original value.
+   */
+  debugExpireIn(expireIn: number | null): void {
+    this.debugExpireInValue = expireIn;
   }
 
   /**
