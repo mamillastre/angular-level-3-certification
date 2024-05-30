@@ -18,6 +18,7 @@ import { TabsComponent } from "./tabs/tabs.component";
 import { TabDirective } from './tab.directive';
 import { CurrentConditionsCardComponent } from './current-conditions-card/current-conditions-card.component';
 import { CacheService } from './cache.service';
+import { DebugCachePanelComponent } from './debug-cache-panel/debug-cache-panel.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { CacheService } from './cache.service';
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     TabsComponent,
     TabDirective,
-    CurrentConditionsCardComponent
+    CurrentConditionsCardComponent,
+    DebugCachePanelComponent
   ],
   providers: [
     LocationService,

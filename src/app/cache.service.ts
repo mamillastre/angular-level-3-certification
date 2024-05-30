@@ -59,6 +59,17 @@ export class CacheService {
   }
 
   /**
+   * Clear all the cached data
+   */
+  async clear(): Promise<void> {
+    Object.keys(localStorage).forEach(key => {
+      if(key.match(/^CACHE./)) {
+        localStorage.removeItem(key);
+      }
+   });
+  }
+
+  /**
    * This method forces the expireIn parameter from the "get" method.
    * This is only for debugging purpose. Do not use out of this scope.
    * @param expireIn The value to force. It will override all the "expireIn" parameters passed to the "get" method. Set to null to reset the original value.
